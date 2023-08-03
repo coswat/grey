@@ -38,15 +38,17 @@ fn main() {
     // Create new Commands
     let mut commands: Commands = Commands::new();
     // add a command
-    commands.add("coswat", || -> u8 {
-       println!("Hello World");
-       0
-    }, "coswat admin command");
+    commands.add("coswat", test_cmd , "test command");
     // run the commands
     app.run(cmd, commands);
+}
+
+fn test_cmd() -> u8 {
+    println!("Hello from test");
+    0
 }
 ```
 
 ## License
 
-The grey package is open-sourced software licensed under the [MIT license](LICENSE.md).
+The grey package is open-sourced software licensed under the [MIT license](LICENSE).

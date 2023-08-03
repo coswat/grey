@@ -4,7 +4,7 @@
 
 use std::env;
 
-/// Get the cmd ( cargo run [cmd] [args...])
+/// Get the cmd  ex: cargo run (cmd) (args...)
 ///
 /// # Examples
 ///
@@ -19,7 +19,7 @@ pub fn get_cmd() -> String {
         None => String::new(),
     }
 }
-/// Get the args ( cargo run [cmd] [args...])
+/// Get the args ex:  cargo run (cmd) (args...)
 ///
 /// # Examples
 ///

@@ -49,6 +49,8 @@ fn test_cmd() -> u8 {
 }
 ```
 
+checkout the docs for the details, [Docs](https://docs.rs/grey/0.1.0/grey/)
+
 ## License
 
 The grey package is open-sourced software licensed under the [MIT license](LICENSE).

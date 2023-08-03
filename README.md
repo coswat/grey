@@ -32,7 +32,7 @@ fn main() {
     // Create new Commands
     let mut commands: Commands = Commands::new();
     // add a command
-    commands.add("coswat", test_cmd , "test command");
+    commands.add("test", test_cmd , "test command");
     // run the commands
     app.run(cmd, commands);
 }
@@ -43,7 +43,7 @@ fn test_cmd() -> u8 {
 }
 ```
 
-checkout the docs for the details, [Docs](https://docs.rs/grey/0.1.0/grey/)
+checkout the docs for the details, [Docs](https://docs.rs/grey/latest/grey/)
 
 ## License
 

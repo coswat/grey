@@ -170,14 +170,14 @@ impl<'a> App<'a> {
     /// }, "test command");
     ///
     /// // Run the commands
-    /// app.run("test", commands);
+    /// app.run("test".to_string(), commands);
     /// ```
-    pub fn run(&self, cmd: &'a str, commands: Commands) {
+    pub fn run(&self, cmd: String, commands: Commands) {
         if cmd.is_empty() {
             self.show_defaults(commands);
             process::exit(1);
         }
-        match commands.values.get(cmd) {
+        match commands.values.get(&cmd) {
             Some(cmd_info) => {
                 let code: i32 = (cmd_info.handler)() as i32;
                 process::exit(code);

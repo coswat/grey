@@ -20,16 +20,10 @@ grey = "0.1.0"
 
 ```rust
 use grey::builder::{App, Commands};
-use std::env;
+use grey::vars;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let cmd: &str;
-    if args.len() < 2 {
-        cmd = "";
-    } else {
-        cmd = &args[1];
-    }
+    let cmd: String = vars::get_cmd();
     // Create a new app
     let mut app: App = App::new();
     app.name("Test CLI");

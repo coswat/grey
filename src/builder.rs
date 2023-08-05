@@ -6,7 +6,7 @@ use std::collections::HashMap;
 use std::process;
 
 struct CommandInfo {
-    handler: fn() -> u8,
+    handler: fn(app: &App) -> u8,
     desc: String,
 }
 
@@ -18,13 +18,13 @@ pub struct Commands {
 
 #[derive(Debug)]
 /// App struct which hold name, description and version of the app
-pub struct App<'a> {
+pub struct App {
     /// name of the app
-    pub name: &'a str,
+    pub name: String,
     /// description of the app
-    pub desc: &'a str,
+    pub desc: String,
     /// version of the app
-    pub version: &'a str,
+    pub version: String,
 }
 
 impl Commands {
@@ -38,9 +38,17 @@ impl Commands {
     /// let mut commands: Commands = Commands::new();
     /// ```
     pub fn new() -> Self {
-        let command: Commands = Commands {
+        let mut command: Commands = Commands {
             values: HashMap::new(),
         };
+        command.add(
+            "version",
+            |app: &App| -> u8 {
+                println!("{}", app.version);
+                0
+            },
+            "version command",
+        );
         command
     }
     /// Add a command
@@ -58,12 +66,12 @@ impl Commands {
     ///
     /// let mut commands: Commands = Commands::new();
     /// // add a command
-    /// commands.add("test", || -> u8 {
+    /// commands.add("test", |_| -> u8 {
     ///  println!("Hello World");
     ///  0
     /// }, "test command");
     /// ```
-    pub fn add(&mut self, cmd: &str, handler: fn() -> u8, desc: &str) {
+    pub fn add(&mut self, cmd: &str, handler: fn(app: &App) -> u8, desc: &str) {
         let command_info: CommandInfo = CommandInfo {
             handler,
             desc: desc.to_string(),
@@ -72,7 +80,7 @@ impl Commands {
     }
 }
 
-impl<'a> App<'a> {
+impl App {
     /// Create a empty App struct
     ///
     /// # Examples
@@ -84,9 +92,9 @@ impl<'a> App<'a> {
     /// ```
     pub fn new() -> Self {
         App {
-            name: "",
-            desc: "",
-            version: "",
+            name: "".to_string(),
+            desc: "".to_string(),
+            version: "".to_string(),
         }
     }
     /// Providing CLI app name
@@ -104,8 +112,8 @@ impl<'a> App<'a> {
     /// // add the name
     /// app.name("test name");
     /// ```
-    pub fn name(&mut self, name: &'a str) {
-        self.name = name;
+    pub fn name(&mut self, name: &str) {
+        self.name = name.to_string();
     }
     /// Providing CLI app description
     ///
@@ -123,8 +131,8 @@ impl<'a> App<'a> {
     /// // add the description
     /// app.description("This is a test CLI app");
     /// ```
-    pub fn description(&mut self, desc: &'a str) {
-        self.desc = desc;
+    pub fn description(&mut self, desc: &str) {
+        self.desc = desc.to_string();
     }
     /// Providing CLI app version
     ///
@@ -143,8 +151,8 @@ impl<'a> App<'a> {
     /// // add version
     /// app.version("1.0.0");
     /// ```
-    pub fn version(&mut self, version: &'a str) {
-        self.version = version;
+    pub fn version(&mut self, version: &str) {
+        self.version = version.to_string();
     }
     /// Run the app
     ///
@@ -164,7 +172,7 @@ impl<'a> App<'a> {
     /// app.version("1.0.0");
     ///
     /// let mut commands: Commands = Commands::new();
-    /// commands.add("test", || {
+    /// commands.add("test", |_| {
     ///     println!("hello");
     ///     0
     /// }, "test command");
@@ -179,7 +187,7 @@ impl<'a> App<'a> {
         }
         match commands.values.get(&cmd) {
             Some(cmd_info) => {
-                let code: i32 = (cmd_info.handler)() as i32;
+                let code: i32 = (cmd_info.handler)(self) as i32;
                 process::exit(code);
             }
             None => {

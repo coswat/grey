@@ -37,7 +37,7 @@ fn main() {
     app.run(cmd, commands);
 }
 
-fn test_cmd() -> u8 {
+fn test_cmd(_app: &App) -> u8 {
     println!("Hello from test");
     0
 }

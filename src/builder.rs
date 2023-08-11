@@ -47,7 +47,7 @@ impl Commands {
                 println!("{}", app.version);
                 0
             },
-            "version command",
+            "Display this application version",
         );
         command
     }

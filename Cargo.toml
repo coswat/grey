@@ -1,6 +1,6 @@
 [package]
 name = "grey"
-version = "0.1.0"
+version = "0.1.1"
 author = "coswat"
 license = "MIT"
 description = "Grey is a minimal package to build console applications"
